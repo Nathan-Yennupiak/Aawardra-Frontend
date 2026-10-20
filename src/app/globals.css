@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --color-bg-base: #050505;
+  --color-bg-surface: rgba(25, 25, 25, 0.4);
+  --color-bg-surface-hover: rgba(35, 35, 35, 0.6);
+  
+  --color-primary-accent: #E5A33D;
+  --color-primary-glow: rgba(229, 163, 61, 0.4);
+  --color-primary-hover: #f3b14a;
+
+  --color-secondary-accent: #6C5CE7;
+  
+  --color-text-main: #F4F4F5;
+  --color-text-muted: #A1A1AA;
+
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.15);
+
+  --color-glass-bg: rgba(20, 20, 22, 0.6);
+  --color-glass-border: rgba(255, 255, 255, 0.05);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-bg-base text-text-main font-body leading-relaxed overflow-x-hidden min-h-screen m-0 p-0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold leading-tight;
+  }
+
+  :root.light,
+  .light {
+    color-scheme: light;
+    --color-bg-base: #ffffff;
+    --color-bg-surface: #ffffff;
+    --color-bg-surface-hover: #f9fafb;
+    --color-text-main: #111827;
+    --color-text-muted: #4b5563;
+    --color-border-subtle: rgba(0, 0, 0, 0.08);
+    --color-border-strong: rgba(0, 0, 0, 0.15);
+    --color-glass-bg: #ffffff;
+    --color-glass-border: rgba(0, 0, 0, 0.05);
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-glass-bg backdrop-blur-md border border-glass-border rounded-md shadow-sm dark:shadow-md;
+  }
+
+  .btn-primary {
+    @apply bg-linear-to-br from-primary-accent to-[#D48B25] text-[#111] font-heading font-semibold px-6 py-3 rounded-lg border-none cursor-pointer transition-all duration-300 shadow-[0_4px_15px_var(--color-primary-glow)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_var(--color-primary-glow)] hover:from-primary-hover hover:to-primary-accent;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent text-text-main font-heading font-medium px-6 py-3 rounded-lg border border-border-strong cursor-pointer transition-all duration-300 hover:bg-bg-surface hover:border-primary-accent;
+  }
+
+  .container {
+    @apply max-w-300 mx-auto px-6;
+  }
+
+  .hero {
+    @apply py-25 text-center relative;
+  }
+
+  .hero h1 {
+    @apply text-6xl mb-6 bg-linear-to-r from-white to-primary-accent bg-clip-text text-transparent;
+  }
+
+  .hero p {
+    @apply text-xl text-text-muted max-w-150 mx-auto mb-10;
+  }
+
+  .awards-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 py-8;
+  }
+
+  .award-card {
+    @apply text-center transition-transform duration-300 hover:-translate-y-1;
+  }
+
+  .award-card h3 {
+    @apply text-xl mb-2;
+  }
+
+  .award-card p {
+    @apply text-text-muted text-sm mb-4;
+  }
+}

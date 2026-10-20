@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE885" />
+      <stop offset="40%" stop-color="#F5B738" />
+      <stop offset="75%" stop-color="#D48B25" />
+      <stop offset="100%" stop-color="#8F5405" />
+    </linearGradient>
+    <linearGradient id="goldLight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF5C0" />
+      <stop offset="100%" stop-color="#E5A638" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#F5B738" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181E" />
+      <stop offset="100%" stop-color="#09090C" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Squircle -->
+  <rect width="512" height="512" rx="120" fill="url(#bgGrad)" />
+  <rect width="504" height="504" x="4" y="4" rx="116" fill="none" stroke="url(#gold)" stroke-width="4" stroke-opacity="0.6" />
+
+  <!-- Ambient Glow Behind Trophy -->
+  <circle cx="256" cy="240" r="180" fill="url(#glow)" />
+
+  <!-- Top Star -->
+  <path d="M256 90 L264 114 L289 114 L269 129 L276 153 L256 138 L236 153 L243 129 L223 114 L248 114 Z" fill="url(#goldLight)" />
+
+  <!-- Trophy Cup Body -->
+  <path d="M176 160 C176 270 220 295 256 300 C292 295 336 270 336 160 L176 160 Z" fill="url(#gold)" />
+  <!-- Cup Rim -->
+  <rect x="166" y="152" width="180" height="14" rx="7" fill="url(#goldLight)" />
+
+  <!-- Left Handle -->
+  <path d="M176 180 C130 180 120 240 176 260" fill="none" stroke="url(#gold)" stroke-width="16" stroke-linecap="round" />
+  <!-- Right Handle -->
+  <path d="M336 180 C382 180 392 240 336 260" fill="none" stroke="url(#gold)" stroke-width="16" stroke-linecap="round" />
+
+  <!-- Trophy Stem -->
+  <path d="M244 300 L240 360 L272 360 L268 300 Z" fill="url(#gold)" />
+
+  <!-- Trophy Pedestal / Base -->
+  <path d="M216 360 L296 360 L308 400 L204 400 Z" fill="url(#goldLight)" />
+  <rect x="180" y="400" width="152" height="24" rx="6" fill="url(#gold)" />
+</svg>
