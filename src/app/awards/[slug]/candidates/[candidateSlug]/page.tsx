@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import VoteSection from './VoteSection';
+import { API_BASE_URL } from '@/lib/api';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 async function getCandidate(slug: string, candidateSlug: string) {
   try {
-    const res = await fetch(`http://localhost:4000/api/v1/awards/${slug}/candidates/${candidateSlug}`, {
+    const res = await fetch(`${API_BASE_URL}/awards/${slug}/candidates/${candidateSlug}`, {
       cache: 'no-store'
     });
     if (!res.ok) return null;

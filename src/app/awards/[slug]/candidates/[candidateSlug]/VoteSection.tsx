@@ -3,6 +3,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 
 import NominateModal from '@/components/awards/NominateModal';
+import { API_BASE_URL } from '@/lib/api';
 
 function VoteForm({ 
   awardCandidateId, 
@@ -37,7 +38,7 @@ function VoteForm({
   const verifyPayment = async (reference: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/nominations/verify/${reference}`);
+      const res = await fetch(`${API_BASE_URL}/nominations/verify/${reference}`);
       const data = await res.json();
       
       if (data.success) {

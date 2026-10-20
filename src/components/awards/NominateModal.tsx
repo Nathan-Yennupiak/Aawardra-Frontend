@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { API_BASE_URL } from '@/lib/api';
 
 interface NominateModalProps {
   isOpen: boolean;
@@ -28,7 +29,7 @@ export default function NominateModal({ isOpen, onClose, awardCandidateId, candi
     setMessage('');
 
     try {
-      const res = await fetch('http://localhost:4000/api/v1/nominations/initialize', {
+      const res = await fetch(`${API_BASE_URL}/nominations/initialize`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 

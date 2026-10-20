@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import CandidateCard from '../../../components/awards/CandidateCard';
+import { API_BASE_URL } from '@/lib/api';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 async function getAward(slug: string) {
   try {
-    const res = await fetch(`http://localhost:4000/api/v1/awards/${slug}`, {
+    const res = await fetch(`${API_BASE_URL}/awards/${slug}`, {
       cache: 'no-store'
     });
     if (!res.ok) return null;
@@ -20,7 +21,7 @@ async function getAward(slug: string) {
 
 async function getCandidates(slug: string) {
   try {
-    const res = await fetch(`http://localhost:4000/api/v1/awards/${slug}/candidates`, {
+    const res = await fetch(`${API_BASE_URL}/awards/${slug}/candidates`, {
       cache: 'no-store'
     });
     if (!res.ok) return [];

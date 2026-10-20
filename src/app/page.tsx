@@ -2,12 +2,13 @@ import Link from 'next/link';
 import EmptyState from '../components/ui/EmptyState';
 import AwardsGrid from '../components/awards/AwardsGrid';
 import HeroSection from '../components/layout/HeroSection';
+import { API_BASE_URL } from '@/lib/api';
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
 async function getAwards() {
   try {
-    const res = await fetch('http://localhost:4000/api/v1/awards', {
+    const res = await fetch(`${API_BASE_URL}/awards`, {
       next: { revalidate: 60 }
     });
     if (!res.ok) {
