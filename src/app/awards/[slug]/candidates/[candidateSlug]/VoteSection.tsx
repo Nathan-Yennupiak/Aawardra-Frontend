@@ -11,7 +11,8 @@ function VoteForm({
   candidateName,
   awardSlug,
   candidateSlug,
-  nominationFee 
+  nominationFee,
+  paystackFeePercentage
 }: { 
   awardCandidateId: string; 
   awardName: string; 
@@ -19,6 +20,7 @@ function VoteForm({
   awardSlug: string;
   candidateSlug: string;
   nominationFee?: number;
+  paystackFeePercentage?: number;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -91,6 +93,7 @@ function VoteForm({
         awardSlug={awardSlug}
         candidateSlug={candidateSlug}
         nominationFee={nominationFee}
+        paystackFeePercentage={paystackFeePercentage}
       />
     </>
   );
@@ -103,6 +106,7 @@ export default function VoteSection(props: {
   awardSlug: string;
   candidateSlug: string;
   nominationFee?: number;
+  paystackFeePercentage?: number;
 }) {
   return (
     <Suspense fallback={<div style={{ padding: '24px', background: 'rgba(255,255,255,0.05)', borderRadius: '12px', marginTop: '24px' }}>Loading voting section...</div>}>

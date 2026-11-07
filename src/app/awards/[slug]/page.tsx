@@ -124,7 +124,7 @@ export default async function AwardDetailPage({
             </div>
           ) : (
             filteredCandidates.map((candidate: any) => (
-              <CandidateCard key={candidate.id} candidate={{...candidate, nominationFee: award.nominationFee}} awardSlug={slug} />
+              <CandidateCard key={candidate.id} candidate={{...candidate, nominationFee: award.nominationFee, paystackFeePercentage: award.paystackFeePercentage}} awardSlug={slug} />
             ))
           )}
         </div>

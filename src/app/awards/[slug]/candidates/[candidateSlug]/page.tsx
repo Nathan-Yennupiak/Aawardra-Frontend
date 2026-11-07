@@ -109,6 +109,7 @@ export default async function CandidateDetailPage({ params }: { params: Promise<
                awardSlug={slug}
                candidateSlug={candidate.slug}
                nominationFee={award.nominationFee}
+               paystackFeePercentage={award.paystackFeePercentage}
              />
           </div>
         </div>

@@ -25,6 +25,7 @@ export interface CandidateCardProps {
   };
   awardCandidateId?: string;
   nominationFee?: number;
+  paystackFeePercentage?: number;
 }
 
 /**
@@ -108,6 +109,7 @@ export default function CandidateCard({ candidate, awardSlug }: { candidate: Can
         awardSlug={awardSlug}
         candidateSlug={candidate.slug}
         nominationFee={candidate.nominationFee}
+        paystackFeePercentage={candidate.paystackFeePercentage}
       />
     </>
   );

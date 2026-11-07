@@ -10,9 +10,17 @@ interface NominateModalProps {
   awardSlug: string;
   candidateSlug: string;
   nominationFee?: number;
+  /** Paystack fee rate for this award's platform, from the API. */
+  paystackFeePercentage?: number;
 }
 
-export default function NominateModal({ isOpen, onClose, awardCandidateId, candidateName, awardSlug, candidateSlug, nominationFee }: NominateModalProps) {
+// Must match MAX_VOTES_PER_NOMINATION / DEFAULT_PAYSTACK_FEE_PERCENTAGE in the backend's financial.service.ts.
+const MAX_VOTES = 10_000;
+const DEFAULT_PAYSTACK_FEE_PERCENTAGE = 1.95;
+
+const clampVotes = (n: number) => Math.min(MAX_VOTES, Math.max(1, n));
+
+export default function NominateModal({ isOpen, onClose, awardCandidateId, candidateName, awardSlug, candidateSlug, nominationFee, paystackFeePercentage }: NominateModalProps) {
   const [email, setEmail] = useState('');
   const [votes, setVotes] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -48,13 +56,18 @@ export default function NominateModal({ isOpen, onClose, awardCandidateId, candi
         setIsSuccess(false);
       }
     } catch (error) {
-      setMessage('An error occurred. Please try again.');
+      // fetch only throws when no usable response arrived: offline, server down, or blocked by CORS.
+      console.error('Nomination request failed', error);
+      setMessage('Could not reach the server. Check your connection and try again.');
     } finally {
       setLoading(false);
     }
   };
 
   const totalFee = (nominationFee || 10000) * votes;
+  // Same gross-up the backend charges: customerPays = base / (1 - rate)
+  const feeRate = (paystackFeePercentage ?? DEFAULT_PAYSTACK_FEE_PERCENTAGE) / 100;
+  const customerPays = Math.round(totalFee / (1 - feeRate));
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
@@ -81,13 +94,13 @@ export default function NominateModal({ isOpen, onClose, awardCandidateId, candi
             <div className="flex justify-between mb-2">
               <span className="text-text-muted">Transaction fee:</span>
               <span className="font-medium text-text-main">
-                GHS {((Math.round(totalFee / (1 - 0.0195)) - totalFee) / 100).toFixed(2)}
+                GHS {((customerPays - totalFee) / 100).toFixed(2)}
               </span>
             </div>
             <div className="flex justify-between pt-2 border-t border-border-strong font-bold">
               <span className="text-text-main">Total:</span>
               <span className="text-primary-accent">
-                GHS {(Math.round(totalFee / (1 - 0.0195)) / 100).toFixed(2)}
+                GHS {(customerPays / 100).toFixed(2)}
               </span>
             </div>
           </div>
@@ -109,7 +122,7 @@ export default function NominateModal({ isOpen, onClose, awardCandidateId, candi
             <div className="flex items-center justify-between bg-bg-base border border-border-strong rounded-md overflow-hidden shadow-inner h-14">
               <button
                 type="button"
-                onClick={() => setVotes(Math.max(1, votes - 1))}
+                onClick={() => setVotes(clampVotes(votes - 1))}
                 className="h-full px-6 text-xl font-bold text-text-muted hover:text-text-main hover:bg-bg-subtle transition-colors border-r border-border-strong cursor-pointer"
               >
                 −
@@ -117,14 +130,15 @@ export default function NominateModal({ isOpen, onClose, awardCandidateId, candi
               <input 
                 type="number" 
                 min="1"
+                max={MAX_VOTES}
                 value={votes}
-                onChange={(e) => setVotes(Math.max(1, parseInt(e.target.value) || 1))}
+                onChange={(e) => setVotes(clampVotes(parseInt(e.target.value) || 1))}
                 required
                 className="w-full h-full bg-transparent text-text-main focus:outline-hidden text-2xl font-bold text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
               <button
                 type="button"
-                onClick={() => setVotes(votes + 1)}
+                onClick={() => setVotes(clampVotes(votes + 1))}
                 className="h-full px-6 text-xl font-bold text-text-muted hover:text-text-main hover:bg-bg-subtle transition-colors border-l border-border-strong cursor-pointer"
               >
                 +
